@@ -3867,9 +3867,60 @@ const SWORN_SIBLING_EVENTS = {
     ]
 };
 // =======================================================================
-// ===================== 【新增】女性视角青梅竹马事件库 ======================
-// =======================================================================
-// [替换] 请用这个完整的代码块替换您文件中现有的 CHILDHOOD_SWEETHEART_EVENTS 对象
+// [替换] 请用这个完整的代码块替换您文件中现有的 CHILDHOOD_SWEETHEART_EVENTS_FEMALE_PERSPECTIVE 对象
+const CHILDHOOD_SWEETHEART_EVENTS_FEMALE_PERSPECTIVE = {
+    'event_1_kite': {
+        id: 'event_1_kite',
+        age_range: [12, 13], // 修复点：年龄从10-12岁改为12-13岁
+        description: "春日午后，风和日丽，你的青梅竹马为你放飞一只他亲手扎的纸鸢。可惜风太大，纸鸢的线断了，挂在了高高的树梢上。",
+        options: [
+            { text: "【他奋力爬树】", req: { martial: 20 }, effects: { bond: 5 }, log: "他三两下就爬上树为你取回了纸鸢，你看在眼里，觉得他英勇可靠。" },
+            { text: "【安慰失落的他】", req: {}, effects: { bond: 8 }, log: "他没能取回纸鸢，十分沮丧。你安慰他说纸鸢不重要，重要的是心意，他听后很受用。" },
+            { text: "【你提议一起想办法】", req: {}, effects: { bond: 10 }, log: "你们找来长长的竹竿，最终合力将纸鸢取了下来。这次小小的合作，让你们的心贴得更近。" }
+        ]
+    },
+    'event_2_bookstore': {
+        id: 'event_2_bookstore',
+        age_range: [14, 15], // 修复点：微调年龄范围
+        description: "你与他相约逛书局。你在一本昂贵的诗集前流连许久，虽喜爱却舍不得买。",
+        options: [
+            { text: "【他悄悄买下送你】", req: {}, effects: { bond: 12, favor: 10 }, log: "分别时，他将那本诗集塞到你手中，说是给你的礼物。你又惊又喜，感动不已。" },
+            { text: "【约定将来一起买】", req: {}, effects: { bond: 8 }, log: "你们约定，等将来他功成名就，再来买下这本书，一个共同的约定让你们对未来充满期待。" },
+            { text: "【你最终没有买】", req: {}, effects: { bond: -3 }, log: "你最终还是放下了书，他看在眼里，也未多言，气氛有些沉闷。" }
+        ]
+    },
+    'event_3_defend': {
+        id: 'event_3_defend',
+        age_range: [15, 16], // 修复点：微调年龄范围
+        description: "几个纨绔子弟在街上对你言语轻薄，他怒不可遏，冲上去与对方理论，甚至动了手。",
+        options: [
+            { text: "【为他助威】", req: {}, effects: { bond: 15 }, log: "你觉得他为你挺身而出的样子帅极了，你们的关系因此飞速升温。" },
+            { text: "【拉住他，劝他冷静】", req: {}, effects: { bond: 8, favor: 5 }, log: "你担心他吃亏，及时拉住了他。他虽有不甘，但很听你的话，这让你感到安心。" },
+            { text: "【为他包扎伤口】", req: {}, effects: { bond: 10, health: -5 }, log: "他受了些轻伤，你心疼地为他包扎，他不觉得疼，反而很开心。" }
+        ]
+    },
+    'event_4_sachet': {
+        id: 'event_4_sachet',
+        age_range: [16, 17], // 修复点：微调年龄范围
+        description: "你发现，另一位名门闺秀送了他一个亲手缝制的香囊，他似乎并未拒绝。",
+        options: [
+            { text: "【假装不知】", req: {}, effects: { bond: -5 }, log: "你选择尊重他的选择，内心却五味杂陈，你们的关系可能因此疏远。" },
+            { text: "【质问他】", req: {}, effects: { random: [{ chance: 0.6, bond: -8, log: "他觉得你无理取闹，二人不欢而散。" }, { chance: 0.4, bond: 5, log: "他急忙解释，并表示心里只有你，让你窃喜。" }] } },
+            { text: "【缝一个更好的香囊】", req: { talent: 60 }, effects: { bond: 10, attributes: { talent: 2 } }, log: "你连夜缝制了一个更精致的香囊送给他，他立刻换上了你的。你的才情和心意都赢了。" }
+        ]
+    },
+    'event_5_promise': {
+        id: 'event_5_promise',
+        age_range: [17, 18],
+        description: "你们在山顶看日出，谈及未来，你有些迷茫地问他，以后会是什么样子。",
+        options: [
+            { text: "【他许下承诺】", req: {}, effects: { bond: 20, flag: 'proposal_bonus' }, log: "“无论未来如何，我都会在你身边。”他坚定的承诺，让你对未来充满信心，并解锁了提亲成功率加成。" },
+            { text: "【他谈论事业】", req: {}, effects: { bond: 3 }, log: "他意气风发地描述自己未来的事业蓝图。你欣赏他的志向，但内心有一丝失落。" },
+            { text: "【他沉默了】", req: {}, effects: { bond: -10 }, log: "他的沉默让你感到不安。" }
+        ]
+    }
+};
+
 const CHILDHOOD_SWEETHEART_EVENTS = {
     'event_1_fishing': {
         id: 'event_1_fishing',
@@ -8914,7 +8965,7 @@ function showTokenCrafting(npcId) {
         const requiredItemDef = ITEM_DATA[requiredItemId];
         const canCraft = hasItemInInventory(requiredItemId);
 
-        // ▼▼▼【核心代码】这部分逻辑是您当前文件中缺失的 ▼▼▼
+  
         let sourceText = '职业事件'; // 默认的获取途径文本
         
         // 查找这个材料是由哪个职业产出的
@@ -8928,7 +8979,7 @@ function showTokenCrafting(npcId) {
             // 更新途径文本，使其更具体，并使用我们修正后的“及以上”
             sourceText = `${careerName} (需Lv.2及以上)`;
         }
-        // ▲▲▲ 缺失的逻辑到此结束 ▲▲▲
+     
 
         let reqText = '';
         if (!canCraft) {
@@ -8940,14 +8991,14 @@ function showTokenCrafting(npcId) {
             <div class="token-icon"><i class="fas fa-gift"></i></div>
             <div class="token-details">
                 <strong>${data.name}</strong><br>
-                {/* ▼▼▼【核心代码】使用上面生成的 sourceText 替换掉写死的文本 ▼▼▼ */}
+                {
                 <small>需要: <span class="value">${requiredItemDef ? requiredItemDef.name : '特殊材料'}</span> | 来自: <span class="value">${sourceText}</span></small>
                 ${!canCraft ? `<br><small style="color:red;">${reqText}</small>` : ''}
             </div>
         </div>`;
     }).join('');
 
-    // 【保留功能】这部分是您已有的“豪掷千金”选项，完全保留
+    
     const moneyOptionCost = 5000;
     const canAffordMoneyOption = gameState.finances.wealth >= moneyOptionCost;
     content += `
@@ -9368,6 +9419,7 @@ function interactWithApprentice(apprenticeId) {
     showOverlay('apprenticeSystemOverlay');
 }
 // [用这个新版本替换] performApprenticeInteraction 函数
+// ===================== 【请用此函数完整替换】 =====================
 function performApprenticeInteraction(apprenticeId, interactionId) {
     const apprentice = gameState.apprentices.find(a => a.id === apprenticeId);
     const interaction = apprenticeData.interactions.find(i => i.id === interactionId);
@@ -9394,11 +9446,35 @@ function performApprenticeInteraction(apprenticeId, interactionId) {
 
     let apprenticeEffectsLog = [];
     let masterEffectsLog = [];
+    let narrativeText = ''; // 用于生成描述性文本
 
+    // 【修复核心】重写反馈文本生成逻辑
+    switch(interactionId) {
+        case 'teach':
+            narrativeText = "你将毕生所学倾囊相授，徒弟听得如痴如醉，似乎对经史子集有了更深的理解。温故而知新，你自己的学问也精进了不少。";
+            break;
+        case 'practice':
+            narrativeText = "庭院中，你们师徒二人切磋武艺，汗水浸湿了衣衫。徒弟的招式愈发纯熟，你的筋骨也得到了活动。";
+            break;
+        case 'socialize':
+            narrativeText = "你带着徒弟参加了一场文会雅集，教导TA待人接物的礼节。TA在众人面前举止得体，为你挣得了不少颜面。";
+            break;
+        case 'mentor':
+            narrativeText = "月下长谈，你与徒弟探讨人生哲理。TA眼中迷茫渐去，多了几分清明，而你也在教导中坚定了自己的道心。";
+            break;
+        case 'gift_money':
+            narrativeText = `“这点钱拿去，买些需要的东西吧。”你的慷慨让徒弟${apprentice.name}感动不已，视你如再生父母。`;
+            break;
+        default:
+            narrativeText = `你对徒弟 ${apprentice.name} 进行了 ${interaction.name}。`;
+            break;
+    }
+
+    // 应用效果并生成详细日志（这部分逻辑保留并优化）
     if (interaction.effect.apprentice) {
         if (interaction.effect.apprentice.attributes) {
             for (const [attr, value] of Object.entries(interaction.effect.apprentice.attributes)) {
-                apprentice.attributes[attr] = (apprentice.attributes[attr] || 0) + value; // [修复] 移除了200的上限
+                apprentice.attributes[attr] = (apprentice.attributes[attr] || 0) + value;
                 apprenticeEffectsLog.push(`${ATTR_MAP[attr]} +${value}`);
             }
         }
@@ -9417,11 +9493,15 @@ function performApprenticeInteraction(apprenticeId, interactionId) {
         }
     }
 
-    let resultText = `你对徒弟 <strong class="value">${apprentice.name}</strong> 进行了 <strong>${interaction.name}</strong>。<br>`;
-    if(apprenticeEffectsLog.length > 0) resultText += `<p><strong>${apprentice.name}:</strong> ${apprenticeEffectsLog.join('，')}。</p>`;
-    if(masterEffectsLog.length > 0) resultText += `<p><strong>你:</strong> ${masterEffectsLog.join('，')}。</p>`;
+    // 组合最终的反馈文本
+    let resultText = `<p>${narrativeText}</p><hr style="margin: 10px 0; border-top: 1px dashed var(--border-color-light);">`;
+    if(apprenticeEffectsLog.length > 0) {
+        resultText += `<p><strong>${apprentice.name}:</strong> ${apprenticeEffectsLog.join('，')}。</p>`;
+    }
+    if(masterEffectsLog.length > 0) {
+        resultText += `<p><strong>你:</strong> ${masterEffectsLog.join('，')}。</p>`;
+    }
 
-    // 【修复】回调函数中增加了 renderGame()，确保主界面和徒弟界面都刷新
     showEventCard('师徒互动', 'fa-users', resultText, [
         { text: '好的', callback: () => { renderGame(); showApprenticeSystem(); } }
     ]);
@@ -9510,13 +9590,15 @@ function handleApprenticeEvent(apprenticeId, event, option) {
 }
 function checkApprenticeGraduation(apprentice) {
     if (apprentice.state === 'graduated' || apprentice.age < 18) return false;
-
     const masterProfession = gameState.career.path || 'default';
     const requirements = APPRENTICE_GRADUATION_REQUIREMENTS[masterProfession] || APPRENTICE_GRADUATION_REQUIREMENTS['default'];
-    
+
     for (const attr in requirements) {
         if (attr === 'desc') continue;
-        if ((apprentice.attributes[attr] || 0) < requirements[attr]) {
+        // ▼▼▼ 核心修复点 ▼▼▼
+        // 在进行逻辑判断前，也对属性值进行取整，确保与界面显示一致
+        if (Math.floor(apprentice.attributes[attr] || 0) < requirements[attr]) {
+        // ▲▲▲ 修复结束 ▲▲▲
             return false;
         }
     }
@@ -10621,15 +10703,17 @@ function triggerLoverEvents() {
         }
     });
 }
+// ===================== 【第二步：替换此函数】 =====================
 function triggerSweetheartEvent() {
     const playerAge = gameState.player.age;
     const bondValue = gameState.flags.bondValue || 0;
     const triggeredEvents = gameState.flags.triggeredSweetheartEvents || [];
     
-    // [修改] 根据玩家性别选择不同的事件库
+    // [修复点] 修正了这里的拼写错误 CHILDHOO -> CHILDHOOD
     const eventPool = gameState.player.gender === 'female' 
         ? CHILDHOOD_SWEETHEART_EVENTS_FEMALE_PERSPECTIVE 
         : CHILDHOOD_SWEETHEART_EVENTS;
+
     // 筛选出所有当前可触发的事件
     const availableEvents = Object.values(eventPool).filter(event => {
         const inAgeRange = playerAge >= event.age_range[0] && playerAge <= event.age_range[1];
@@ -10665,10 +10749,10 @@ function triggerSweetheartEvent() {
         }
         if (gameState.marriage.isMarried && sweetheart.relationship !== 'spouse') {
             options.push({
-                text: `【纳她为妾】`,
+                text: `【纳他为妾】`,
                 req: { bond: 70 },
                 effects: { proposal: 'concubine' },
-                log: `你已娶妻，但仍放不下她，决定将她纳为妾室。`
+                log: `你已娶妻，但仍放不下他，决定将他纳为妾室。`
             });
         }
         if (gameState.player.attributes.virtue > 60) {
@@ -10676,11 +10760,11 @@ function triggerSweetheartEvent() {
                 text: `【赠金祝福，此生为友】`,
                 req: {},
                 effects: { proposal: 'friend' },
-                log: `你送上一份厚礼，祝福她觅得良人。你们将成为一生的知己。`
+                log: `你送上一份厚礼，祝福他觅得良人。你们将成为一生的知己。`
             });
         }
         if(gameState.marriage.isMarried && sweetheart.relationship === 'spouse') {
-             showEventCard("命运弄人", "fa-cloud-rain", "某个雨夜，你与她在街角偶遇，彼此已是他人夫/妇。你们相视一笑，感叹命运弄人，从此关系固定为“知己”，不再有爱情后续。");
+             showEventCard("命运弄人", "fa-cloud-rain", "某个雨夜，你与他在街角偶遇，彼此已是他人夫/妇。你们相视一笑，感叹命运弄人，从此关系固定为“知己”，不再有爱情后续。");
              return;
         }
     } else {
@@ -10710,7 +10794,6 @@ function triggerSweetheartEvent() {
         showDecisionCard('青梅竹马', 'fa-hand-holding-heart', eventToTrigger.description, decisionOptions);
     });
 }
-
 // [替换] 找到这个函数并用下面的代码完整替换
 // [替换此函数]
 function handleSweetheartEventResult(eventId, option) {
@@ -10855,9 +10938,7 @@ function applyPassiveBonuses() {
 function advanceTime() {
     checkForApprenticeTrials();
     checkForApprenticeSocialEvents();
-    // ▼▼▼ 海运修复点 ▼▼▼
-    processMaritimeTradeCycle(); // 新增此行，以在每回合推进海运周期
-    // ▲▲▲ 修复结束 ▲▲▲
+    processMaritimeTradeCycle(); 
     delete gameState.flags.ateGoldenFriesThisTurn;
     gameState.player.age += 0.5;
     gameState.date.turn = gameState.date.turn === 1 ? 2 : 1;
@@ -10865,24 +10946,23 @@ function advanceTime() {
         gameState.date.year++;
         // Yearly events
         let annualIncome = gameState.family.annualIncome;
-        if(gameState.career.path && gameState.career.level > -1) {
-            annualIncome += careerPaths[gameState.player.gender][gameState.career.path].levels[gameState.career.level].salary * 2;
-        }
+
         // 【新增】检查两淮盐引的年收益
         if (hasItemInInventory('liang_huai_yan_yin')) {
-            const saltIncome = 50000; // 每年五十万两的巨额财富
+            const saltIncome = 50000;
             annualIncome += saltIncome;
             logEvent(`你持有的<strong class="value">【两淮盐引】</strong>为你带来了 <span class="value">${saltIncome}</span> 两的巨额年收益。`, true);
         }
 
-        // ▼▼▼ 俸禄修复点 ▼▼▼
-        // 原代码: applyEffects({wealth: annualIncome});
-        // 修改为:
-        gameState.career.unclaimedSalary = (gameState.career.unclaimedSalary || 0) + annualIncome;
+        // ▼▼▼ 最终修复点 ▼▼▼
+        // 旧的错误代码: gameState.career.unclaimedSalary = (gameState.career.unclaimedSalary || 0) + annualIncome;
+        // 正确的代码: 我们将家族年收入等非职业薪水直接发放到玩家私产
+        applyEffects({ wealth: annualIncome });
         // ▲▲▲ 修复结束 ▲▲▲
 
         applyPassiveBonuses();
-        logEvent(`年初结算，你的待领取俸禄增加了 <span class="value">${annualIncome}</span> 两。`);
+        // 修改日志文本，使其更准确
+        logEvent(`年初结算，你的家族年收入 <span class="value">${annualIncome}</span> 两已入账。`);
         processAssetAppreciation();
         processInvestmentReturns();
         updateNPCs();
@@ -10891,6 +10971,17 @@ function advanceTime() {
     // Half-yearly events
     processCropGrowth();
     if(gameState.merchant.seaExplorationCooldown > 0) gameState.merchant.seaExplorationCooldown--;
+
+    // 每回合职业俸禄结算（此部分逻辑是正确的，予以保留）
+    if (gameState.career.path && gameState.career.level > -1) {
+        const currentLevelData = careerPaths[gameState.player.gender][gameState.career.path].levels[gameState.career.level];
+        const turnSalary = currentLevelData.salary;
+        if (turnSalary > 0) {
+            gameState.career.unclaimedSalary = (gameState.career.unclaimedSalary || 0) + turnSalary;
+            logEvent(`本回合俸禄 <span class="value">${turnSalary}</span> 两已存入钱柜，待领取。`);
+        }
+    }
+
     // Reset flags
     gameState.flags.actionUsed_study = 0;
     gameState.flags.actionUsed_apprentice = 0;
@@ -10900,7 +10991,6 @@ function advanceTime() {
     gameState.flags.npcInteractionCounts = {}; 
     delete gameState.flags.confessionAttemptedThisTurn;
 }
-
 // ===================== 【新增】NPC互动计数器函数 START =====================
 /**
  * 检查并消耗指定NPC的一个行动点
@@ -12116,7 +12206,7 @@ function renderCareerTab() {
         <h3 class="card-header">${currentPathData.dashboard_name || '我的事业'}</h3>
         <p><strong>职业:</strong> ${currentPathData.name}</p>
         <p><strong>职位:</strong> ${currentLevel.title}</p>
-        <p><strong>每半年俸禄:</strong> ${currentLevel.salary} 两</p>
+        <p><strong>每回合俸禄:</strong> ${currentLevel.salary} 两</p>
         ${promotionReqHTML}
         <div class="attribute" style="margin-top:20px;">
             <div class="attribute-name"><span><i class="fas fa-chart-line"></i> 功绩</span><span>${c.performance} / ${nextLevel ? nextLevel.promotion_points : 'MAX'}</span></div>
@@ -12148,6 +12238,119 @@ function renderCareerTab() {
 // ===================== 【替换】全新的府邸/内府标签页 =====================
 // =======================================================================
 
+// [新增] showWifeInteractionUI 函数
+function showWifeInteractionUI() {
+    const wife = gameState.npcs[gameState.marriage.spouseId];
+    if (!wife || wife.isDead) {
+        showToast("你尚未娶妻或妻子已故。");
+        return;
+    }
+
+    const renderCategory = (category) => {
+        let html = '';
+        WIFE_INTERACTION_DATA[category].forEach(action => {
+            let disabled = false;
+            let reason = '';
+            // 检查各种条件
+            if (action.req) {
+                 if (action.req.favor && wife.favor < action.req.favor) {
+                    disabled = true;
+                    reason = `(恩爱值≥${action.req.favor}) `;
+                }
+                if (action.req.prestige && gameState.player.attributes.prestige < action.req.prestige) {
+                    disabled = true;
+                    reason = `(家威≥${action.req.prestige}) `;
+                }
+                if (action.req.authority_holder && gameState.marriage.householdAuthorityHolder !== 'wife') {
+                    disabled = true;
+                    reason = `(妻子需为掌事者) `;
+                }
+            }
+            html += `
+                <button class="option" ${disabled ? 'disabled' : ''} onclick="handleWifeInteraction('${action.id}')">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <span class="option-text"><strong>${action.name}</strong><div><small>${action.desc} ${reason.trim()}</small></div></span>
+                </button>
+            `;
+        });
+        return html;
+    };
+
+    const content = `
+        <div class="status-item" style="justify-content:center; margin-bottom:15px;">正妻当前状态: <strong class="value">${wife.mood || '平和'}</strong></div>
+        <div style="max-height: 50vh; overflow-y: auto; padding-right:5px;">
+            <div class="section-header"><i class="fas fa-heart"></i> 日常情感</div>
+            ${renderCategory('daily_affection')}
+            <div class="section-header"><i class="fas fa-home"></i> 内宅议事</div>
+            ${renderCategory('household_discussion')}
+            <div class="section-header"><i class="fas fa-briefcase"></i> 事业与支持</div>
+            ${renderCategory('career_support')}
+        </div>
+    `;
+    showDecisionCard(`与正妻 (${wife.name}) 互动`, 'fa-user-friends', content, []);
+}
+
+// [新增] handleWifeInteraction 函数
+function handleWifeInteraction(actionId) {
+    const wife = gameState.npcs[gameState.marriage.spouseId];
+    if (!wife || !checkAndUseNpcActionPoint(wife.id)) return;
+
+    const action = [...WIFE_INTERACTION_DATA.daily_affection, ...WIFE_INTERACTION_DATA.household_discussion, ...WIFE_INTERACTION_DATA.career_support].find(a => a.id === actionId);
+    if (!action) return;
+
+    let resultText = '';
+
+    switch(actionId) {
+        case 'praise_publicly':
+            resultText = '你在家人面前称赞了她的贤惠，她面露娇羞，十分欢喜。';
+            applyEffects({ relationship: { targetId: wife.id, favor: 8 }, attributes: { prestige: 2 } });
+            break;
+        case 'accompany_back':
+            resultText = '你的陪伴让妻子在娘家非常有面子，她对你更添爱意。';
+            applyEffects({ relationship: { targetId: wife.id, favor: 12 }, reputation: 5 });
+            break;
+        case 'listen_troubles':
+            resultText = '你耐心倾听她管理后宅的烦恼，并给予了支持，她感到十分慰藉。';
+            applyEffects({ relationship: { targetId: wife.id, favor: 6 }, marriage: { familyHarmony: 5 } });
+            break;
+        case 'give_personal_gift':
+             if (gameState.player.privateAssets < 200) { showToast("你的私产不足200两。"); return; }
+             applyEffects({ privateAssets: -200, relationship: { targetId: wife.id, favor: 10 } });
+             resultText = '你用私产为她准备了一份贴心的礼物，她十分惊喜。';
+            break;
+        case 'delegate_authority':
+            if (gameState.marriage.householdAuthorityHolder !== 'wife') {
+                 gameState.marriage.householdAuthorityHolder = 'wife';
+                 resultText = `你将掌家权正式交予${wife.name}，她对此感激不已，决心为你打理好后宅。`;
+                 applyEffects({ relationship: { targetId: wife.id, favor: 20 } });
+            } else {
+                 resultText = `${wife.name}已是掌事者，无需再下放权力。`;
+            }
+            break;
+        case 'discuss_concubines':
+            resultText = `你将妾室的一些事宜交由${wife.name}定夺，她感受到了你的信任和尊重。`;
+            applyEffects({ relationship: { targetId: wife.id, favor: 10 }, marriage: { familyHarmony: 8 } });
+            break;
+        case 'plan_banquet':
+            resultText = '你们一同策划了一场成功的家宴，过程虽有分歧，但最终相视一笑，感情更加深厚。';
+            applyEffects({ relationship: { targetId: wife.id, favor: 7 } });
+            break;
+        case 'provide_funds':
+            if (gameState.player.privateAssets < 300) { showToast("你的私产不足300两。"); return; }
+            applyEffects({ privateAssets: -300 });
+            resultText = `你拨付了300两私产支持${wife.name}的爱好，她对你的体贴非常感动。`;
+            applyEffects({ relationship: { targetId: wife.id, favor: 9 } });
+            break;
+        case 'praise_management':
+            resultText = `你公开赞扬了${wife.name}的持家之能，让她在后宅的威信更高了。`;
+            applyEffects({ relationship: { targetId: wife.id, favor: 6 } });
+            break;
+    }
+    showEventCard(action.name, 'fa-users', resultText);
+    renderGame();
+}
+
+// [替换] renderMarriageTab 函数
 function renderMarriageTab() {
     const isMale = gameState.player.gender === 'male';
     
@@ -12166,7 +12369,6 @@ function renderMarriageTab() {
             </button>
         </div>
     `;
-
     // ==================== 女性玩家界面 ==========================
     if (!isMale) {
         const husband = gameState.npcs[gameState.marriage.spouseId];
@@ -12176,7 +12378,6 @@ function renderMarriageTab() {
             if(husband.suspicionValue > 80) suspicionDesc = "信任崩塌";
             else if(husband.suspicionValue > 50) suspicionDesc = "暗流涌动";
             else if(husband.suspicionValue > 20) suspicionDesc = "偶有微词";
-
             husbandHTML = `
             <div class="section-header"><i class="fas fa-male"></i> 我的夫君</div>
             ${renderNpcCard(husband.id)}
@@ -12188,7 +12389,6 @@ function renderMarriageTab() {
                 <p class="comment" style="text-align:center;">当前阶段: ${suspicionDesc}</p>
             </div>
             `;
-
             husbandHTML += `
             <div class="options" style="margin-top:10px;">
                 <button class="option" onclick="showHusbandInteractionUI()">
@@ -12223,7 +12423,6 @@ function renderMarriageTab() {
                 <button class="option" onclick="showHouseholdAuthorityTasks()"><i class="fas fa-tasks"></i> 协理家务 (提升掌家权)</button>
             </div>`;
         }
-
         // 妾室列表
         let concubineHTML = '';
         const rivalConcubines = (husband && husband.concubines) ? husband.concubines.map(id => gameState.npcs[id]).filter(c => c && !c.isDead) : [];
@@ -12237,7 +12436,6 @@ function renderMarriageTab() {
                     </button>
                 </div>`;
         }
-
         return `
         <h3 class="card-header">我的内府</h3>
         <div style="max-height: 70vh; overflow-y: auto; padding: 5px;">
@@ -12257,7 +12455,6 @@ function renderMarriageTab() {
             if(wife.suspicionValue > 80) suspicionDesc = "信任崩塌";
             else if(wife.suspicionValue > 50) suspicionDesc = "暗流涌动";
             else if(wife.suspicionValue > 20) suspicionDesc = "偶有微词";
-
             wifeHTML = `
             <div class="section-header"><i class="fas fa-chess-queen"></i> 正妻</div>
             ${renderNpcCard(wife.id)}
@@ -12266,8 +12463,15 @@ function renderMarriageTab() {
                 <p class="comment" style="text-align:center;">当前阶段: ${suspicionDesc}</p>
             </div>
             `;
+            // [新增] 为正妻添加专属互动按钮
+            wifeHTML += `
+            <div class="options" style="margin-top:10px;">
+                 <button class="option" onclick="showWifeInteractionUI()">
+                    <i class="fas fa-user-friends"></i><span class="option-text">与正妻互动<div><small>维系感情，共理家事</small></div></span>
+                </button>
+            </div>
+            `;
         }
-
         let concubinesHTML = `<div class="section-header"><i class="fas fa-female"></i> 妾室</div>`;
         const aliveConcubines = gameState.marriage.concubines.map(id => gameState.npcs[id]).filter(c => c && !c.isDead);
         if (aliveConcubines.length > 0) {
@@ -12283,11 +12487,9 @@ function renderMarriageTab() {
             const mother = gameState.npcs[gameState.family.members.motherId];
             if(mother) authorityHolderName = mother.name;
         }
-
-        // 【核心修改】温存选项现在有了独立的计数器和显示
         const intimacyActionsLeft = 3 - (gameState.flags.intimacyActionsUsedThisTurn || 0);
         let intimateOptions = `
-            <div class="section-header"><i class="fas fa-moon"></i> 温存 (本回合剩余 ${intimacyActionsLeft} 次)</div>
+            <div class="section-header"><i class="fas fa-moon"></i> 温存 </div>
             <div class="options">
         `;
         if (wife && !wife.isDead) {
@@ -12297,7 +12499,6 @@ function renderMarriageTab() {
              intimateOptions += `<button class="option" ${intimacyActionsLeft <= 0 ? 'disabled' : ''} onclick="handleIntimateInteraction('${conc.id}')"><i class="fas fa-feather"></i> 与 ${conc.name} 温存</button>`;
         });
         intimateOptions += `</div>`;
-
         let managementOptions = `
             <div class="section-header"><i class="fas fa-gavel"></i> 家主决策</div>
             <div class="options">
@@ -12309,7 +12510,6 @@ function renderMarriageTab() {
                 </button>
                 <button class="option" onclick="showMatchmaker(true)"><i class="fas fa-plus-circle"></i> 纳妾</button>
             </div>`;
-
         return `
         <h3 class="card-header">内帷管理</h3>
         <div style="max-height: 70vh; overflow-y: auto; padding: 5px;">
@@ -15431,19 +15631,15 @@ function showHusbandInteractionUI() {
 function handleHusbandInteraction(category, actionId) {
     const spouse = gameState.npcs[gameState.marriage.spouseId];
     if (!spouse) return;
-
     // 【核心修改】使用新的 per-NPC 计数器
     if (!checkAndUseNpcActionPoint(spouse.id)) {
         return;
     }
-
     const action = HUSBAND_INTERACTION_DATA[category]?.find(a => a.id === actionId);
-
     if (!action) {
         console.error("无法找到互动项:", actionId);
         return;
     }
-
     if (action.req) {
         if (action.req.favor && gameState.marriage.favor < action.req.favor) {
             showToast(`恩宠值不足 ${action.req.favor}`); return;
@@ -15455,9 +15651,7 @@ function handleHusbandInteraction(category, actionId) {
             showToast("缺少关键罪证"); return;
         }
     }
-
     let resultText = '';
-
     switch(actionId) {
         case 'care_inquiry':
             if (spouse.dynamicState === '心烦意乱') {
@@ -15486,6 +15680,16 @@ function handleHusbandInteraction(category, actionId) {
             applyEffects({ privateAssets: -100, marriage: { favor: 6 }});
             resultText = '你用私产为他准备了一份贴心的礼物，他十分欢喜。';
             break;
+        // [新增]
+        case 'prepare_meal':
+            resultText = '你亲手为他准备了他最爱的点心，他夸赞你的手艺。';
+            applyEffects({ marriage: { favor: 5 }, attributes: { virtue: 1 }});
+            break;
+        // [新增]
+        case 'play_music':
+            resultText = '你的琴声悠扬，为他驱散了疲惫，让他对你更添爱意。';
+            applyEffects({ marriage: { favor: 10 }, attributes: { talent: 2 }});
+            break;
         case 'manage_network':
             if (gameState.player.privateAssets < 500) { showToast("私产不足。"); return; }
             applyEffects({ privateAssets: -500, marriage: { favor: 15 }});
@@ -15495,6 +15699,16 @@ function handleHusbandInteraction(category, actionId) {
         case 'analyze_situation':
             resultText = '你为他分析了朝堂上的利害关系，并提出了应对之策，他茅塞顿开，成功化解危机。';
             applyEffects({ marriage: { favor: 20 }, attributes: { scheming: 2 } });
+            break;
+        // [新增]
+        case 'use_family_ties':
+            resultText = '你动用娘家的关系，为夫君解决了一个难题，他在家族中的地位也因此更加稳固。';
+            applyEffects({ marriage: { favor: 18 }, reputation: 10 });
+            break;
+        // [新增]
+        case 'praise_husband':
+            resultText = '你在贵妇圈中有意无意地称赞夫君，为他营造了良好的名声。';
+            applyEffects({ marriage: { favor: 7 }, reputation: 5 });
             break;
         case 'pillow_talk':
             showDecisionCard('吹枕边风', 'fa-bed', '夜深人静，你打算向夫君暗示些什么？', [
@@ -15516,6 +15730,27 @@ function handleHusbandInteraction(category, actionId) {
                 }}
             ]);
             return; 
+        // [新增]
+        case 'discuss_children_edu':
+            const children = gameState.children.filter(c => !c.isDead && c.age > 5 && c.age < 16);
+            if (children.length > 0) {
+                const child = getRandomElement(children);
+                resultText = `你们一同为 ${child.name} 的未来做规划，相谈甚欢，让他感受到了家庭的温暖。`;
+                applyEffects({ marriage: { favor: 10 } });
+            } else {
+                resultText = '你们暂时没有需要规划前程的子女。';
+            }
+            break;
+        // [新增]
+        case 'request_authority':
+            if ((gameState.marriage.householdAuthorityHolder || 'mother') === 'mother') {
+                resultText = '你向夫君表达了希望执掌家事的意愿，他表示会考虑。';
+                gameState.flags.authorityTransferHint = (gameState.flags.authorityTransferHint || 0) + 2;
+                applyEffects({ marriage: { favor: 5 } });
+            } else {
+                resultText = '你已是当家主母，无需再请求。';
+            }
+            break;
         case 'expel_concubine':
             triggerExpelConcubineEvent();
             return;
@@ -15523,7 +15758,6 @@ function handleHusbandInteraction(category, actionId) {
             resultText = `你与夫君进行了一次深入的交流。`;
             break;
     }
-
     showEventCard(action.name, 'fa-users', resultText);
     renderGame();
 }
@@ -20642,6 +20876,9 @@ function restartGame(heirData) {
 }
 // [替换]
 // [替换]
+// =======================================================================
+// ===================== 【替换此函数】setupNewGame =====================
+// =======================================================================
 function setupNewGame(gender, inheritanceData = null, options = {}) {
     const family = getRandomElement(familyTemplates);
     const allNames = new Set();
@@ -20776,8 +21013,35 @@ function setupNewGame(gender, inheritanceData = null, options = {}) {
     const mother = generateNPC({ id:'mother', gender: 'female', age: gameState.player.age + 20, name: motherName, role: '母亲', relationship: 'family', favor: 50 });
     gameState.family.members['fatherId'] = father.id;
     gameState.family.members['motherId'] = mother.id;
+
+    // =======================================================================
+    // ===================== 【风月鉴问题修复-新增代码】START ====================
+    // =======================================================================
+    // 在游戏开始时，就将风月鉴中定义的佳人创建为真正的NPC对象
+    fengYueJianData.courtesans.forEach(courtesanDef => {
+        const npc = generateNPC({
+            id: courtesanDef.id, // 使用预设的ID
+            name: courtesanDef.name,
+            gender: 'female',
+            age: getRandomInt(18, 25),
+            title: courtesanDef.title,
+            role: '风月鉴佳人',
+            relationship: 'courtesan',
+            favor: 30, // 初始好感
+            attributes: {
+                charm: getRandomInt(85, 98),
+                talent: getRandomInt(70, 90),
+                wisdom: getRandomInt(60, 85)
+            },
+            baseData: courtesanDef, // 将原始定义数据附加到NPC对象上，方便后续调用
+            firstIntimateCost: fengYueJianData.sleep.first_cost, // 记录初次互动的成本
+            avatar: getRandomElement(avatarPools['female']) // 随机分配一个头像
+        });
+    });
+    // ===================== 【风月鉴问题修复-新增代码】END ======================
+    // =======================================================================
     
-// ================== 【新增青梅竹马逻辑】 START ==================
+    // ================== 【新增青梅竹马逻辑】 START ==================
     const sweetheartGender = gender === 'male' ? 'female' : 'male';
     const sweetheartBg = getRandomElement(sweetheartGender === 'female' ? ladyBackgrounds : suitorBackgrounds);
     const sweetheart = generateNPC({
@@ -20790,7 +21054,7 @@ function setupNewGame(gender, inheritanceData = null, options = {}) {
     gameState.flags.childhoodSweetheartId = sweetheart.id;
     // 【逻辑修改】此处不再直接将青梅竹马加入社交关系，而是通过12岁的事件来正式结识
     // gameState.social.relationships[sweetheart.id] = { ... }; // 这段代码已被移除
-// ================== 【新增青梅竹马逻辑】 END ====================
+    // ================== 【新增青梅竹马逻辑】 END ====================
 
     if (inheritanceData) {
         logEvent(`你作为 <strong class="value">${playerName}</strong>，继承了先辈的遗志与部分财富，从${Math.floor(startAge)}岁开启了新的人生。`, true);
@@ -20801,8 +21065,7 @@ function setupNewGame(gender, inheritanceData = null, options = {}) {
     generateInitialNPCs();
     updateFinancialTier();
     renderGame();
-}
-// ===================== 【新增】所有新功能函数 =====================
+}// ===================== 【新增】所有新功能函数 =====================
 
 // ------------------- 俸禄领取功能 -------------------
 function claimSalary() {
@@ -20980,7 +21243,9 @@ function confirmConcubineChoice(npcId, cost) {
 // =======================================================================
 function autoSaveGame() {
     try {
-        localStorage.setItem(SAVE_SLOT_KEY_PREFIX + 'auto', JSON.stringify(gameState));
+        // ▼▼▼ 核心修改点：将 'auto' 修改为 1 ▼▼▼
+        localStorage.setItem(SAVE_SLOT_KEY_PREFIX + 1, JSON.stringify(gameState));
+        // ▲▲▲ 修改结束 ▲▲▲
     } catch(e) { console.error("Auto-save failed", e); }
 }
 function showSaveLoadOverlay(isSaving) {
@@ -21022,28 +21287,27 @@ function loadGame(slot, isAuto = false) {
         let loadedData;
         try {
             loadedData = JSON.parse(saveData);
-            
+
             // [新增] 核心安全检查：验证存档文件的基本结构
             if (!loadedData || typeof loadedData.player === 'undefined' || typeof loadedData.flags === 'undefined') {
                 // 如果存档缺少关键部分（如player对象），就认为它是损坏的
                 throw new Error("存档文件结构不完整或已损坏。");
             }
-            
+
             gameState = loadedData; // 验证通过后，才赋值给全局 gameState
-            
+
             // 保留所有原有功能：重新生成Set，初始化系统
             gameState.flags.allNames = new Set(Array.from(gameState.flags.allNames || []));
             initApprenticeSystem(); 
-            
+
             showToast(`已成功读取${isAuto ? '自动' :  `存档 ${slot}`}。`);
             closeAllOverlays();
             renderGame();
-
         } catch(e) {
             console.error("读取存档时出错:", e); // 在控制台打印详细错误，方便调试
             showToast("读取失败，存档文件可能已损坏，已自动清理。");
             localStorage.removeItem(SAVE_SLOT_KEY_PREFIX + slot); // 删除损坏的存档
-            
+
             // [新增] 如果是自动存档读取失败，则引导玩家重新开始，避免卡住
             if (isAuto) {
                 closeAllOverlays();
@@ -21053,7 +21317,7 @@ function loadGame(slot, isAuto = false) {
         }
     } else { 
         showToast("读取失败，存档为空。"); 
-        
+
         // [新增] 如果是自动存档为空，也直接进入新游戏流程
         if (isAuto) {
             closeAllOverlays();
@@ -21061,7 +21325,8 @@ function loadGame(slot, isAuto = false) {
             showOverlay('genderSelectionOverlay');
         }
     }
-}function deleteSave(slot) {
+}
+function deleteSave(slot) {
     if (confirm(`确定要删除存档 ${slot} 吗？此操作不可逆！`)) {
         localStorage.removeItem(SAVE_SLOT_KEY_PREFIX + slot);
         showToast(`存档 ${slot} 已删除。`);
@@ -21514,9 +21779,11 @@ function showInvestmentDetails(instanceId) {
 
     // 1. 升级店铺选项
     if (nextLevel) {
+        // 【修复点】将 nextLevel.upgrade_cost 修改为 currentLevel.upgrade_cost
+        const upgradeCost = currentLevel.upgrade_cost; 
         options.push({
-            htmlContent: `<i class="fas fa-arrow-up"></i><span class="option-text"><strong>升级为 ${nextLevel.name}</strong><div><small>成本: ${nextLevel.upgrade_cost} 两</small></div></span>`,
-            disabled: gameState.finances.wealth < nextLevel.upgrade_cost,
+            htmlContent: `<i class="fas fa-arrow-up"></i><span class="option-text"><strong>升级为 ${nextLevel.name}</strong><div><small>成本: ${upgradeCost} 两</small></div></span>`,
+            disabled: gameState.finances.wealth < upgradeCost,
             callback: () => upgradeInvestment(instanceId)
         });
     }
@@ -21548,19 +21815,24 @@ function showInvestmentDetails(instanceId) {
 function upgradeInvestment(instanceId) {
     const investment = gameState.merchant.investments.find(i => i.instanceId === instanceId);
     const type = merchantInvestmentData.types.find(t => t.id === investment.typeId);
-    const nextLevel = type.levels[investment.level + 1];
+    
+    // 【修复点】获取当前等级的升级成本，而不是下一级的
+    const currentLevel = type.levels[investment.level];
+    const upgradeCost = currentLevel.upgrade_cost;
 
-    if (gameState.finances.wealth < nextLevel.upgrade_cost) {
+    if (gameState.finances.wealth < upgradeCost) {
         showToast("资金不足以升级。");
         return;
     }
     
-    applyEffects({ wealth: -nextLevel.upgrade_cost, reputation: 10 });
+    applyEffects({ wealth: -upgradeCost, reputation: 10 });
     investment.level++;
     
     showEventCard('产业升级', 'fa-arrow-up', `你花费巨资将店铺升级为 <strong class="value">${type.levels[investment.level].name}</strong>，声名远扬！`);
     showInvestmentDashboard();
 }
+
+
 
 function showManagerSelection(instanceId) {
     const investment = gameState.merchant.investments.find(i => i.instanceId === instanceId);
@@ -22310,6 +22582,7 @@ const FEMALE_SPOUSE_INTERACTIONS = {
     ]
 };
 
+// [替换] HUSBAND_INTERACTION_DATA 对象
 const HUSBAND_INTERACTION_DATA = {
     daily_affection: [
         {
@@ -22335,6 +22608,20 @@ const HUSBAND_INTERACTION_DATA = {
             name: '赠送礼物',
             desc: '用私产为他准备一份心意。',
             req: {}
+        },
+        // [新增]
+        {
+            id: 'prepare_meal',
+            name: '送上吃食',
+            desc: '为夫君准备他喜爱的点心。',
+            req: { state: ['身心俱疲', '闲情逸致'] }
+        },
+        // [新增]
+        {
+            id: 'play_music',
+            name: '抚琴解忧',
+            desc: '弹奏一曲，为他舒缓心神。',
+            req: { talent: 60, state: ['心烦意乱'] }
         }
     ],
     career_support: [
@@ -22350,6 +22637,20 @@ const HUSBAND_INTERACTION_DATA = {
             name: '分析时局',
             desc: '用你的智慧为他排忧解难。',
             req: { wisdom: 60, state: ['心烦意乱'] }
+        },
+        // [新增]
+        {
+            id: 'use_family_ties',
+            name: '动用娘家人脉',
+            desc: '请娘家出面为夫君助力。',
+            req: { favor: 80 } // 需要夫妻恩爱值高
+        },
+        // [新增]
+        {
+            id: 'praise_husband',
+            name: '在外称赞夫君',
+            desc: '在贵妇圈中称赞夫君的才干。',
+            req: { charm: 70 }
         }
     ],
     household_discussion: [
@@ -22359,9 +22660,85 @@ const HUSBAND_INTERACTION_DATA = {
             desc: '影响他对内宅人事的看法。',
             req: { favor: 70, scheming: 50, state_not: ['疑窦丛生'] }
         },
-        // [移除] 此处原有的 'expel_concubine' 选项已被安全移除。
+        // [新增]
+        {
+            id: 'discuss_children_edu',
+            name: '商议子嗣前程',
+            desc: '与夫君共同规划子女的未来。',
+            req: { favor: 60 }
+        },
+        // [新增]
+        {
+            id: 'request_authority',
+            name: '请求掌管财权',
+            desc: '认为自己能更好地打理家库。',
+            req: { wisdom: 80, authority: 50 } // 需要一定智慧和部分掌家权
+        }
     ]
-}; 
+};
+// [新增] WIFE_INTERACTION_DATA 对象
+const WIFE_INTERACTION_DATA = {
+    daily_affection: [
+        {
+            id: 'praise_publicly',
+            name: '当众称赞',
+            desc: '在家人面前称赞她的持家之能。',
+            req: {}
+        },
+        {
+            id: 'accompany_back',
+            name: '陪伴回门',
+            desc: '陪她回娘家，让她倍有颜面。',
+            req: { favor: 50 }
+        },
+        {
+            id: 'listen_troubles',
+            name: '倾听烦恼',
+            desc: '耐心倾听她管理后宅的烦恼。',
+            req: {}
+        },
+        {
+            id: 'give_personal_gift',
+            name: '赠送私礼',
+            desc: '用你的私产为她准备惊喜。',
+            req: {}
+        }
+    ],
+    household_discussion: [
+        {
+            id: 'delegate_authority',
+            name: '下放掌家权',
+            desc: '将部分或全部掌家权交给她。',
+            req: { prestige: 60 } // 需要一定家威
+        },
+        {
+            id: 'discuss_concubines',
+            name: '商议妾室事宜',
+            desc: '就妾室的赏罚晋升征求她的意见。',
+            req: { favor: 70 } // 需恩爱值高
+        },
+        {
+            id: 'plan_banquet',
+            name: '共办家宴',
+            desc: '与她一起策划一场家宴。',
+            req: {}
+        }
+    ],
+    career_support: [
+        {
+            id: 'provide_funds',
+            name: '拨付资金',
+            desc: '从私产拨付资金支持她的事业或爱好。',
+            req: {}
+        },
+        {
+            id: 'praise_management',
+            name: '赞扬持家之能',
+            desc: '肯定她在管理内务上的贡献。',
+            req: { authority_holder: 'wife' } // 需要妻子是掌事者
+        }
+    ]
+};
 
 const FAVOR_LEVEL_DATA = {
     0: { name: '相敬如冰', desc: '丈夫在所有内斗事件中，100%偏向婆婆或受宠妾室。' },
